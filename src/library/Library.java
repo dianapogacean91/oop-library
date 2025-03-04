@@ -1,7 +1,6 @@
 package library;
 
-import authors.Author;
-
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,6 +13,14 @@ public class Library {
     public Library() {
         this.books = new LinkedList<>();
         this.members = new LinkedList<>();
+    }
+
+    public void findBooksPublishedBefore(LocalDate localDate) {
+        for (Book book : this.books) {
+            if (book.getPublishDate().isBefore(localDate)) {
+                System.out.println(book);
+            }
+        }
     }
 
     public void addBook(Book book) {
@@ -48,7 +55,7 @@ public class Library {
         System.out.println("This member does not exists: " + member.getName());
     }
 
-    public void borrowBook(String cnp, String isbn) {
+    public void returnBook(String cnp, String isbn) {
         Book foundBook = null;
         for (Book book : this.books) {
             if (book.getIsbn().equals(isbn)) {
@@ -61,6 +68,37 @@ public class Library {
             return;
         }
 
+        Member foundMember = null;
+
+        for (Member member : this.members) {
+            if (member.getCnp().equals(cnp)) {
+                foundMember = member;
+                break;
+            }
+        }
+        if (foundMember == null) {
+            System.out.println("Member with this cnp not found!");
+            return;
+        }
+
+        foundMember.returnBook(foundBook);
+    }
+
+    public void borrowBook(String cnp, String isbn) {
+        //TODO - extract find book by isbn in method
+        Book foundBook = null;
+        for (Book book : this.books) {
+            if (book.getIsbn().equals(isbn)) {
+                foundBook = book;
+                break;
+            }
+        }
+        if (foundBook == null) {
+            System.out.println("Book with this isbn not found!");
+            return;
+        }
+
+        //TODO - extract find member by isbn in method
         Member foundMember = null;
 
         for (Member member : this.members) {
@@ -114,6 +152,10 @@ public class Library {
 //        }
     }
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 
     //TODO -- return book
     //TODO -- find book by title

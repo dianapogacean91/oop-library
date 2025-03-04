@@ -2,6 +2,8 @@ package library;
 
 import authors.Author;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Book {
@@ -11,17 +13,33 @@ public class Book {
     private Author author;
     //TODO - extract to class
     private String publishing;
+    private LocalDate publishDate;
 
     private boolean available = true;
 
-    public Book(String isbn, Author author, String title, String publishing) {
+    private LocalDateTime borrowDateTime;
+
+
+    public Book(String isbn, Author author, String title, String publishing, LocalDate publishDate) {
         this.isbn = isbn;
         //TODO - find why it searched in library jdk instead of my own package
         this.author = author;
         this.title = title;
         this.publishing = publishing;
+        this.publishDate = publishDate;
     }
 
+    public LocalDate getPublishDate() {
+        return publishDate;
+    }
+
+    public LocalDateTime getBorrowDateTime() {
+        return borrowDateTime;
+    }
+
+    public void setBorrowDateTime(LocalDateTime borrowDateTime) {
+        this.borrowDateTime = borrowDateTime;
+    }
 
     public boolean isAvailable() {
         return this.available;
@@ -79,4 +97,12 @@ public class Book {
         return Objects.hash(isbn);
     }
 
+    @Override
+    public String toString() {
+        return "Book{" +
+                "isbn='" + isbn + '\'' +
+                ", title='" + title + '\'' +
+                ", publishDate=" + publishDate +
+                '}';
+    }
 }
